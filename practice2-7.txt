@@ -1,0 +1,134 @@
+#include "pch.h"
+#include <iostream>
+using namespace std;
+
+#define LEN 8
+#define T 16
+#define BYTE T/LEN
+
+unsigned char readBinary(const char* bitString)
+{
+	unsigned char num = 0; //10101010
+	for (int i = 0; i < LEN; i++)
+	{
+		num = num << 1;
+		num += bitString[i] - '0';
+		//if (bitString[i] == '1') num += 1;
+		//'0' '1'
+	}
+	return num;
+}
+
+bool getBit(unsigned char num, int i) {
+	unsigned char mask = 1 << i;
+	if ((num & mask) == 0) return false;
+	else return true;
+
+	//return (num & (1 << i)) != 0; //위에 세 줄과 같은 의미
+}
+
+bool getBit(int num, int i) {
+	return (num & (1 << i)) != 0; //위에 세 줄과 같은 의미
+}
+
+void printBit(unsigned char num) {
+	for (int i = LEN - 1; i >= 0; i--)
+		cout << getBit(num, i);
+	cout << endl;
+}
+
+unsigned char setBitOn(unsigned char num, int i) {
+	return (num | (1 << i));
+}
+
+unsigned char setBitOff(unsigned char num, int i) {
+	return (num & ~(1 << i)); //내가 원하는 위치만 0이되고 나머지는 1
+}
+
+unsigned char updateBit(unsigned char num, int i, bool flag) {
+	if (flag) return setBitOn(num, i);
+	return setBitOff(num, i);
+}
+
+unsigned char getReversedBits(unsigned char num) {
+	unsigned char num2 = 0;
+	for (int i = 0; i < LEN; i++)
+	{
+		num2 = num2 << 1;
+		num2 += getBit(num, i);
+	}
+	return num2;
+}
+
+bool isSymmetry(unsigned char num) {
+	/*
+	for (int i = 0; i < LEN / 2; i++)
+	{
+		if (getBit(num, i) != getBit(num, LEN - i - 1)) return false;
+	}
+	return true;
+	*/
+	return num == getReversedBits(num);
+}
+
+int getHammingDistance(unsigned char* a, unsigned char* b) {
+	int count = 0;
+	for (int i = 0; i < BYTE; i++)
+		for (int j = 0; j < LEN; j++)
+			if (getBit(a[i], j) != getBit(b[i], j)) count++;
+
+	for (int i = 0; i < BYTE; i++)
+		for (unsigned char c = a[i] ^ b[i]; c != 0; c & (c - 1)) count++;
+
+	//for (unsigned char c = a[0] ^ b[0]; c != 0; c & (c - 1)) count++;
+	//"11111110" -> "11111100" -> "11111000" -> ... "00000000"
+	//254
+	//c가 0이 되면 빠져나옴
+	//가장 우측에있는 1을 0으로 만든다
+	//1왼쪽은 그대로
+	return count;
+}
+
+void secretMap(int n, int* arr1, int* arr2) {
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = n - 1; j >= 0; j--)
+		{
+			if (getBit(arr1[i], j) || getBit(arr2[i], j))
+				cout << "#";
+			else
+				cout << " ";
+		}
+			cout << endl;
+	}
+}
+
+int main() {
+	printBit(setBitOn(readBinary("00000000"), 7));
+	printBit(setBitOff(readBinary("10000000"), 7));
+	printBit(updateBit(readBinary("10000000"), 0, true));
+	cout << (int)readBinary("10000001") << endl;
+	cout << (int)readBinary("01010101") << endl;
+	printBit(getReversedBits(readBinary("11010101")));
+	cout << isSymmetry(readBinary("01011010")) << endl;
+	cout << isSymmetry(readBinary("10101010")) << endl;
+	unsigned char a[BYTE], b[BYTE];
+	a[0] = readBinary("11111111"); a[1] = readBinary("10000000");
+	b[0] = readBinary("00000001"); b[1] = readBinary("00000000");
+	//cout << getHammingDistance(a, b) << endl;
+
+	int n;
+	cin >> n;
+	//int arr1[5] = { 9,20,28,18,11 };
+	//int arr2[5] = { 30,1,21,17,28 };
+	int* arr1 = new int[n];
+	int* arr2 = new int[n];
+	cin >> arr1[0] >> arr1[1] >> arr1[2] >> arr1[3] >> arr1[4];
+	cin >> arr2[0] >> arr2[1] >> arr2[2] >> arr2[3] >> arr2[4];
+
+	
+	secretMap(n, arr1, arr2);
+
+	return 0;
+}
