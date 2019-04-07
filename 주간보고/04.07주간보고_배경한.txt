@@ -1,0 +1,24 @@
+■ 진행사항
+
+[툴 설치]
+
+ # Anaconda & Tensorflow 설치
+
+ # Jupyter notebook 설치 및 원격 접속 설정
+ 
+ # Anaconda 가상환경 생성
+ 
+ # GitHub 설치 및 현재 진행 상황 공유 
+
+[딥러닝]
+
+ # LSTM 모델 주가 예측 예제1 실행    (https://brojang.tistory.com/24)
+
+ # LSTM 모델 주가 예측 예제2 실행
+   (https://m.blog.naver.com/wideeyed/221160038616)
+
+
+■ 예정사항
+
+ # 예제 소스 코드 단계별 학습 및 분석
+
