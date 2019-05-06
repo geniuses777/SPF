@@ -1,0 +1,27 @@
+▶ 진행사항
+
+[주가 예측]
+
+ # FinanceDataReader (Pandas) 를 이용한 주식데이터 불러오기 기능 구현 
+
+
+[학습]
+ 
+ # 중간보고서 작성 및 발표 준비
+
+ # 웹프레임워크 django 개념 유튜브 강의 - https://www.youtube.com/watch?v=LYmZB5IIwAI
+
+ # Many to One 개념 유튜브 강의 -  https://www.youtube.com/watch?v=nz_qLC89Fek&list=PLQ28Nx3M4Jrguyuwg4xe9d9t2XE639e5C&index=44
+
+ # RNN with Time Series Data (모두의딥러닝) 유튜브 강의 - https://www.youtube.com/watch?v=odMGK7pwTqY&list=PLlMkM4tgfjnLSOjrEJN31gZATbcj_MpUm&index=47
+
+[기타]
+ # 캡스톤디자인 중간정산
+
+ # django를 활용한 html 연동 자료조사
+ 
+
+▶ 예정사항
+ 
+ # 파이썬 값 웹으로 넘겨주기
+
