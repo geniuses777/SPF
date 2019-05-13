@@ -1,0 +1,21 @@
+▶ 진행사항
+
+[주가 예측]
+
+ # django 실행 - 비쥬얼스튜디오 
+
+[학습]
+
+ # dropout 개념 학습 -  https://m.blog.naver.com/PostView.nhn?blogId=laonple&logNo=220818841217&proxyReferer=https%3A%2F%2Fwww.google.com%2F
+  ( 신경망 네트워크 일부를 생략 => 연산속도 증가 및 overfiting 방지 )
+
+ 
+
+[기타]
+ # 학과 엠티
+ 
+
+▶ 예정사항
+ 
+ # 파이썬 값 웹으로 넘겨주기
+
