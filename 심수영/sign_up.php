@@ -31,7 +31,7 @@
 	$myp = "INSERT INTO member(id,password) VALUES('$id','$password')";
 	$result=mysqli_query($con,$myp);  
 	if($result){  
-		print "<script language=javascript> alert('회원가입 성공'); onclick="self.close();" </script>";
+		print "<script language=javascript> alert('회원가입 성공'); location.replace('login.html'); </script>";
     }  
     else{  
         print "<script language=javascript> alert('회원가입 실패 다시 시도해 주세요'); location.replace('sign_up.html'); </script>";
