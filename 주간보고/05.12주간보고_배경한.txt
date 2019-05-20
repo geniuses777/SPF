@@ -1,0 +1,19 @@
+■ 진행사항
+
+[툴 설치 및 환경설정]
+ #Pycharm & Django 설치 및 설정 
+
+[주가 예측]
+ # 학습을 통해 얻어진 결과 matplotlib 패키지를 통해 
+   그래프로 표현
+ # 결과 그래프 savefig를 통해 이미지파일로 저장
+
+[학습]
+ # Django 사용법
+ # Pycharm 기본 설정
+
+■ 예정사항
+
+ #Django crontap을 사용해 예약작업 수행
+
+ #Django를 이용해 DB에 이미지파일 저장
