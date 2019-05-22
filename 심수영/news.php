@@ -1,4 +1,31 @@
+<?php
+  $con = mysqli_connect("localhost","geniuses777","stock7840","geniuses777");
 
+  $sql="SELECT title, url from total_news";     // SELECT 구문을 통해 DB를 불러옵니다.
+
+    $result=mysqli_query($con,$sql);
+
+    $numrow = mysqli_num_rows($result);   //총 몇 개의 행을 불러왔는지 확인합니다.    
+
+    for($i=0; $i<$numrow ; $i++){                 //행(ROW) 수 만큼 
+
+        $row[$i]=mysqli_fetch_array($result);     // mysql_fetch_array를 반복합니다.
+
+    }    
+    for($i = 0; $i < $numrow ; $i++){             // mysql_fetch_array를 실행할 때마다 배열을 생성합니다. 
+        $titleArr[$i] = $row[$i][0];  // $ComCodeArr[0]의 값이 IN_ComName 컬럼의 첫번째 값임을 정의 
+        $urlArr[$i] = $row[$i][1];
+    }
+
+    /*for($i =0; $i<$numrow ; $i++){
+      echo $titleArr[$i];
+      echo $urlArr[$i];
+    }*/
+
+    $num=0;
+
+    mysqli_close($con);   
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,28 +114,21 @@
     .list>.list2>a:hover{color: black; text-decoration: none;}
 
     /*stock_graph*/
-    .graph{
+    .content{
       width: 50%;
       height:260px;
       background-color: white;
       margin: 10px auto;
-      padding: 10px;
       border-top: 1px solid #9e9e9e7a;
       border-bottom: 1px solid #9e9e9e7a;
     }
-    .graph>.left{
-      width: 50%;
-      height: 100%;
-      float: left;
-      background-color: pink;
+    .content>.item{
+      font-size: 20px;
+      padding: 20px;
+      background-color: white;
+      border-top: 1px solid #9e9e9e7a;
+      border-bottom: 1px solid #9e9e9e7a;
     }
-    .graph>.right{
-      width: 50%;
-      height: 100%;
-      float: right;
-      background-color: yellow;
-    }
-
   </style>
 </head>
 <body>
@@ -122,52 +142,61 @@
       <form action="search.php" method="post">
         <div class="search">
           <input type="text" class="blank" name="company_name" placeholder="키워드, 종목명, 종목코드 검색">
-          <input type="IMAGE" class="img" src="search.png" name="Submit" value="Submit"  align="absmiddle">
+          <input type="IMAGE" class="img" src="search.png" name="searchbutton" value="Submit"  align="absmiddle">
         </div>
       </form> 
       <div class="list">
         <div class="list2">
-          <a href='javascript:void(0);' onclick="go_home();"><div class="item">홈</div></a>
+          <a href='javascript:void(0);' onclick="go_home();"><div class="item">홈</div></a>      
+          <a href='javascript:void(0);' onclick="go_trend();"><div class="item">증시동향</div></a>
         </div>
         <div class="list1">
-          <a href='javascript:void(0);' onclick="go_trend();"><div class="item">증시동향</div></a>
-     	</div>
-     	<div class="list2">
           <a href='javascript:void(0);' onclick="go_news();"><div class="item">뉴스</div></a>
+        </div>
+        <div class="list2">
           <a href="/mypage"><div class="item">마이페이지</div></a>
         </div>
       </div>
     </div>
 
-    <!--stock_graph-->
-    <div class="graph">
-      <div class="left">
-        <img id="image"/>
-      </div>
-      <div class="right">
-      </div>
+    <!--news-->
+    <div class="content">
+      <!--<script language="javascript">
+        for(i=0; i<15; i++)
+        {
+          document.write('<div class='+'\"'+'item'+'\"'+'\>'+
+          i+'<p>'+<?php echo $titleArr[0];?> +'</p>'+
+        '</div>')
+        }
+    </script>-->
+      <?php 
+      for($num =0; $num<15 ; $num++){
+        echo "<div class="item"><p>환영합니다</p></div>";
+        echo $titleArr[$num];
+        echo "</p></div>";
+    }?>
     </div>
-
 </body>
 </html>
 <script>
-	function newPop()
+  function newPop()
   {
     window.open('login.html', '_blank', 'width=470px,height=610px,toolbars=no,scrollbars=no');
   }
-
   var id = "";
 
   get_id();
   if(!id) {myHTML='<a href="login.html" onclick="newPop(); return false;">로그인</a>';}
-  else {myHTML='<a href="trend.html?id=" onclick="return confirm('+'\''+'정말 로그아웃하시겠습니까?'+'\''+');">로그아웃</a>';}
+  else {myHTML='<a href="news.html?" onclick="return confirm('+'\''+'정말 로그아웃하시겠습니까?'+'\''+');">로그아웃</a>';}
   document.getElementById("login").innerHTML=myHTML;
 
   function check_login()
   {
     id = document.getElementById('userID').value;
     console.log(id);
-    location.href="trend.html?id="+id;
+    myHTML='<a href="news.html?" onclick="return confirm('+'\''+'정말 로그아웃하시겠습니까?'+'\''+');">로그아웃</a>';
+
+    document.getElementById("login").innerHTML=myHTML;
   }
   function check()
   {
@@ -175,34 +204,21 @@
   }
   function go_trend()
   {
-    location.href="trend.html?id="+id;
+    location.href="trend.html?"+id;
   }
   function go_home()
   {
-    location.href="index.html?id="+id;
+    location.href="index.html?"+id;
   }
   function go_news()
   {
-    location.href="news.html?id="+id;
+    location.href="news.html?"+id;
   }
   function get_id()
   {
-  	temp=location.href.split("?id=");
+    temp=location.href.split("?");
     data=temp[1].split(":");
     id=data[0];
     console.log(id);
-  }
-
-  //image
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost/image.jpg");
-  xhr.responseType="blob";
-  xhr.onload=response;
-  xhr.send();
-
-  function response(e){
-    var urlCreator = window.URL || window.webkitURL;
-    var imageUrl = urlCreator.createObjectURL(this.response);
-    document.querySelector("#image").src=imageUrl;
   }
 </script>

@@ -1,9 +1,30 @@
 <?php
   $con = mysqli_connect("localhost","geniuses777","stock7840","geniuses777");
 
-    $user = $_GET['id'];
+  $user = "test1";
 
-    //echo $user;
+  //관심 종목
+  $sql="SELECT company from interest where user='$user'";     // SELECT 구문을 통해 DB를 불러옵니다.
+
+    $result=mysqli_query($con,$sql);
+
+    $numrow = mysqli_num_rows($result);   //총 몇 개의 행을 불러왔는지 확인합니다.    
+
+    if($numrow==0) {echo "관심 등록된 종목이 없습니다.";}
+    else{
+         for($i=0; $i<$numrow ; $i++){                 //행(ROW) 수 만큼 
+
+        $row[$i]=mysqli_fetch_array($result);     // mysql_fetch_array를 반복합니다.
+
+        }    
+        for($i = 0; $i < $numrow ; $i++){             // mysql_fetch_array를 실행할 때마다 배열을 생성합니다. 
+            $heartArr[$i] = $row[$i][0];  // $ComCodeArr[0]의 값이 IN_ComName 컬럼의 첫번째 값임을 정의 
+        }
+
+        /*for($i =0; $i<$numrow ; $i++){
+          echo $heartArr[$i];
+        }*/
+    }
 
     //주요 뉴스
     $sql2="SELECT title, url from total_news";     // SELECT 구문을 통해 DB를 불러옵니다.
@@ -28,7 +49,7 @@
     }*/
 
     //상승률
-    $sql3="SELECT company_name,rate from stock_hye order by rate desc";     // SELECT 구문을 통해 DB를 불러옵니다.
+    $sql3="SELECT name,rate from company order by rate desc";     // SELECT 구문을 통해 DB를 불러옵니다.
 
     $result3=mysqli_query($con,$sql3);
 
@@ -44,32 +65,10 @@
         $uppriceArr[$i] = $row[$i][1];
     }
 
-    /*for($i =0; $i<5; $i++){
+    for($i =0; $i<5; $i++){
       echo $upArr[$i];
       echo $uppriceArr[$i];
-    }*/
-
-    //하락률
-    $sql4="SELECT company_name,rate from stock_hye order by rate asc";     // SELECT 구문을 통해 DB를 불러옵니다.
-
-    $result4=mysqli_query($con,$sql4);
-
-    $numrow4 = mysqli_num_rows($result4);   //총 몇 개의 행을 불러왔는지 확인합니다.    
-
-    for($i=0; $i<5; $i++){                 //행(ROW) 수 만큼 
-
-        $row[$i]=mysqli_fetch_array($result4);     // mysql_fetch_array를 반복합니다.
-
-    }    
-    for($i = 0; $i < 5; $i++){             // mysql_fetch_array를 실행할 때마다 배열을 생성합니다. 
-        $downArr[$i] = $row[$i][0];  // $ComCodeArr[0]의 값이 IN_ComName 컬럼의 첫번째 값임을 정의 
-        $downpriceArr[$i] = $row[$i][1];
     }
-
-    /*for($i =0; $i<5; $i++){
-      echo $downArr[$i];
-      echo $downpriceArr[$i];
-    }*/
 
     $num=0;
 
@@ -161,6 +160,7 @@
     .list>.list2>a:link{color: black; text-decoration: none;}
     .list>.list2>a:visited{color: black; text-decoration: none;}
     .list>.list2>a:hover{color: black; text-decoration: none;}
+
     /*stock_graph*/
     .graph{
       width: 50%;
@@ -183,6 +183,37 @@
       float: right;
       background-color: yellow;
     }
+
+    /*관심 종목*/
+    .heart{
+      width: 51.5%;
+      height:220px;
+      background-color: white;
+      margin: 10px auto;
+      border-top: 1px solid #9e9e9e7a;
+      border-bottom: 1px solid #9e9e9e7a;
+    }
+    .heart>.title{
+      height: 18%;
+      padding-top:15px;
+      padding-left: 15px;
+      border-bottom: 1px solid #9e9e9e7a;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .heart>#interest{
+
+    }
+    .heart>#interest>.item{
+      font-size: 17px;
+      padding: 15px 20px;
+      background-color: white;
+      border-top: 1px solid #9e9e9e7a;
+    }
+    .heart>#interest>.item>a:link{color: black; text-decoration: none;}
+    .heart>#interest>.item>a:visited{color: black; text-decoration: none;}
+    .heart>#interest>.item>a:hover{color: black; text-decoration: none;}
+
     /*주요 뉴스*/
     .news{
       width: 51.5%;
@@ -210,6 +241,7 @@
     .news>#main>.item>a:link{color: black; text-decoration: none;}
     .news>#main>.item>a:visited{color: black; text-decoration: none;}
     .news>#main>.item>a:hover{color: black; text-decoration: none;}
+
     /*상승률&하락률*/
     .updown{
       width: 51.5%;
@@ -223,7 +255,7 @@
       width: 100%;
     }
     .updown>.wrapper>.up{
-      width: 47%;
+      width: 50%;
       float: left;
       padding: 10px;
     }
@@ -260,43 +292,10 @@
       height: 100%;
       float: right;
     }
-    /*하락률*/
     .updown>.wrapper>.down{
-      width: 47%;
-      float: right;
-      padding: 10px;
-    }
-    .updown>.wrapper>.down>#nav{
-      width: 100%;
-      height: 30px;
-      padding-top:10px;
-      padding-bottom: 10px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      border-bottom: 2px solid black;
-    }
-    .updown>.wrapper>.down>.rank{
-      width: 100%;
-      height: 100%;
-    }
-    .updown>.wrapper>.down>.rank>.item{
-      height: 23px;
-      padding:10px;
-    }
-    .updown>.wrapper>.down>.rank>.item>.company{
-      width: 70%;
+      width: 50%;
       height: 100%;
       float: left;
-    }
-    .updown>.wrapper>.down>.rank>.item>.company>a:link{color: black; text-decoration: none;}
-    .updown>.wrapper>.down>.rank>.item>.company>a:visited{color: black; text-decoration: none;}
-    .updown>.wrapper>.down>.rank>.item>.company>a:hover{color: black; text-decoration: none;}
-    
-    .updown>.wrapper>.down>.rank>.item>.price{
-      width: 30%;
-      height: 100%;
-      float: right;
     }
   </style>
 </head>
@@ -326,7 +325,7 @@
       </div>
     </div>
 
-        <!--stock_graph-->
+    <!--stock_graph-->
     <div class="graph">
       <div class="left">
       </div>
@@ -334,47 +333,56 @@
       </div>
     </div>
 
+    <!--관심 종목-->
+    <div class="heart">
+      <div class="title">관심종목</div>
+      <div id="interest">
+        <!--<?php 
+        for($num =0; $num<$numrow; $num++){
+        echo "<div class='item'><a href='company.html?$heartArr[$num]'><p>";
+        echo $heartArr[$num];
+        echo "</p></a></div>";
+      }?>-->
+      </div>
+    </div>
+
     <!--주요 뉴스-->
     <div class="news">
       <div class="title">주요 뉴스</div>
       <div id="main">
-        <?php 
+        <!--<?php 
         for($num =0; $num<5 ; $num++){
         echo "<div class='item'><a href='$urlArr[$num]' target='_blank'><p>";
         echo $titleArr[$num];
         echo "</p></a></div>";
-      }?>
+      }?>-->
       </div>
     </div>
+
+    <!--상승률&하락률-->
     <div class="updown">
       <div class="wrapper">
         <div class="up">
           <div id="nav">상승률</div>
           <div class="rank">
-             <?php 
+         
+            <!--<?php 
               for($num =0; $num<5 ; $num++){
-              echo "<div class='item'><div class='company'><a href='company.html?company=$upArr[$num]&id=$user'><p>";
-              echo $upArr[$num];
-              echo "</p></a></div>";
-              echo "<div class='price'><p>+";
-              echo $uppriceArr[$num];
-              echo "</p></div></div>";
-            }?>
+                echo "<div class='item'><div class='company'><a href='company.html?$upArr[$num]'><p>";
+                echo $upArr[$num];
+                echo "</p></a></div><div class='price'><p>";
+                echo $uppriceArr[$num];
+                echo "</p></div></div>;"
+            }?>-->
+            <!--<div class="item">
+              <div class="company">
+                <a href='javascript:void(0);' onclick="go_company_uprank1();"><?php echo $nameArr[0];?></a>
+              </div>
+              <div class="price"></div>
+            </div>-->
           </div>
         </div>
         <div class="down">
-          <div id="nav">하락률</div>
-          <div class="rank">
-            <?php 
-              for($num =0; $num<5 ; $num++){
-              echo "<div class='item'><div class='company'><a href='company.html?$downArr[$num]&$user'><p>";
-              echo $downArr[$num];
-              echo "</p></a></div>";
-              echo "<div class='price'><p>";
-              echo $downpriceArr[$num];
-              echo "</p></div></div>";
-            }?>
-          </div>
         </div>
       </div>
     </div>
@@ -391,10 +399,11 @@
   if(!id) 
     {
       myHTML='<a href="login.html" onclick="newPop(); return false;">로그인</a>';
+      document.getElementById("interest").innerHTML="로그인 해야합니다.";
     }
   else 
     {
-      myHTML='<a href="index.html?id=" onclick="return confirm('+'\''+'정말 로그아웃하시겠습니까?'+'\''+');">로그아웃</a>';
+      myHTML='<a href="index.html?" onclick="return confirm('+'\''+'정말 로그아웃하시겠습니까?'+'\''+');">로그아웃</a>';
       //document.getElementById("interest").innerHTML="~~~";
     }
   document.getElementById("login").innerHTML=myHTML;
@@ -405,7 +414,7 @@
   {
     id = document.getElementById('userID').value;
     console.log(id);
-    location.href="index.html?id="+id;
+    location.href="index.html?"+id;
   }
   function check()
   {
@@ -413,19 +422,19 @@
   }
   function go_trend()
   {
-    location.href="trend.html?id="+id;
+    location.href="trend.html?"+id;
   }
   function go_home()
   {
-    location.href="index.html?id="+id;
+    location.href="index.html?"+id;
   }
   function go_news()
   {
-    location.href="news.html?id="+id;
+    location.href="news.html?"+id;
   }
   function get_id()
   {
-    temp=location.href.split("?id=");
+    temp=location.href.split("?");
     data=temp[1].split(":");
     id=data[0];
     console.log(id);
