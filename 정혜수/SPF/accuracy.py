@@ -4,6 +4,9 @@
 # In[3]:
 
 import pymysql
+import os
+import settings
+import pandas as pd
 
 connection = pymysql.connect(host='222.122.86.187', port=3306, user='geniuses777', password='stock7840',
                        db='geniuses777', charset='utf8')
@@ -24,16 +27,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='삼성'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "samsung"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -57,16 +62,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='카카오'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "kakao"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -90,16 +97,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='네이버'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "naver"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -123,16 +132,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='CJ'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "cj"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -157,16 +168,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='LG'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "lg"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -191,16 +204,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='SK'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "sk"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
               
 
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -225,16 +240,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='LGD'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "lgdisplay"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -259,16 +276,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='두산'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "dusan"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -293,16 +312,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='아시아나항공'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "asiana"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -327,16 +348,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='제주항공'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "jeju"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -361,16 +384,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='한화'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "hanhwa"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -395,16 +420,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='현대'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "hyundai"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"
@@ -429,16 +456,18 @@ try:
         for i in result_stock_price:
             price = i
             
-        sql = "select now from company WHERE name='하이트진로'"
         
-        cursor.execute("set names utf8")
-        
-        cursor.execute(sql)
-        
-        result_now = cursor.fetchone()
-        
-        for i in result_now:
-            now = i
+        #
+        # 저장되어있는 주식데이터 불러오기
+        #
+        sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
+        stock_code = "hite"
+        fullpath = sydtpath + os.path.sep + stock_code + '.csv'
+        pandf = pd.read_csv(fullpath, index_col="Date")
+
+        # 데이터 전처리
+        now = pandf['Close'].values[-1]     # 맨마지막 'Close'데이터
+        now.astype('int')    # int형으로 변환
             
             
         sql = "UPDATE `stock_hye` SET `accuracy` = %s WHERE `company_name` = %s"

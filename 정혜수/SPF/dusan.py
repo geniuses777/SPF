@@ -15,11 +15,32 @@ from keras.layers import Dense           # 딥러닝을 구동하는 데 필요�
 from keras.layers import LSTM            # 딥러닝을 구동하는 데 필요한 케라스 함수
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 import math
 from sklearn.metrics import mean_squared_error
 import pymysql         # 파이썬에서 mysql연동시켜주는 라이브러리
 
+#
+# DB테이블 값 조회 (SELECT)
+#
+connection = pymysql.connect(host='222.122.86.187', port=3306, user='geniuses777', password='stock7840',
+                       db='geniuses777', charset='utf8')
 
+# 오차율 가져오기
+try:
+    with connection.cursor() as cursor:
+        sql = "select accuracy from stock_hye WHERE company_name='두산'"
+        cursor.execute("set names utf8")
+        cursor.execute(sql)
+        result_accuracy = cursor.fetchone()
+        
+        for i in result_accuracy:
+            accuracy = i
+            
+finally:
+    connection.close()
+
+    
 # 데이터셋 생성 함수
 look_back = 1
 def create_dataset(dataset, look_back=1):
@@ -89,12 +110,16 @@ predict = scaler.inverse_transform(lastY)                    # 정규화 시킨 
 print('Predict the Close value of final day: %d' % predict)  # 데이터 입력 마지막 다음날 종가 예측
     
 # 차트출력, 저장
+font_path = "C:/Windows/Fonts/a옛날목욕탕L.ttf"
+fontprop = fm.FontProperties(fname=font_path, size=15)
+
 plt.plot(testPredict)
 plt.plot(testY)
 
-plt.title('dusan predict graph')
+plt.title('[두산] 예측 그래프\n예측값 : %d \t\t\t\t\t\t\t\t오차율 : %s' % (predict, accuracy), fontproperties=fontprop)
 
-plt.savefig("./chart_picture/dusan.png",dpi=300)
+#plt.savefig("./chart_picture/dusan.png",dpi=300)
+plt.savefig("C:\source\SPF\chart_picture\dusan.png", dpi=300)
 #plt.show()
 
 # 사진 데이터 binary형식으로 바꿔주는 함수
