@@ -29,7 +29,7 @@ connection = pymysql.connect(host='222.122.86.187', port=3306, user='geniuses777
 # 오차율 가져오기
 try:
     with connection.cursor() as cursor:
-        sql = "select accuracy from stock_hye WHERE company_name='LG'"
+        sql = "select accuracy from stock_hye WHERE company_name='SK'"
         cursor.execute("set names utf8")
         cursor.execute(sql)
         result_accuracy = cursor.fetchone()
@@ -55,7 +55,7 @@ def create_dataset(dataset, look_back=1):
 # 저장되어있는 주식데이터 불러오기
 #
 sydtpath = os.path.join(settings.BASE_DIR, 'chart_data/%s' % (settings.get_today_str()))
-stock_code = "lg"
+stock_code = "sk"
 fullpath = sydtpath + os.path.sep + stock_code + '.csv'
 pandf = pd.read_csv(fullpath, index_col="Date")
 
@@ -116,10 +116,10 @@ fontprop = fm.FontProperties(fname=font_path, size=15)
 plt.plot(testPredict)
 plt.plot(testY)
 
-plt.title('[LG] 예측 그래프\n예측값 : %d \t\t\t\t\t\t\t\t오차율 : %s' % (predict, accuracy), fontproperties=fontprop)
+plt.title('[SK] 예측 그래프\n예측값 : %d \t\t\t\t\t\t\t\t오차율 : %s' % (predict, accuracy), fontproperties=fontprop)
 
-#plt.savefig("./chart_picture/lg.png",dpi=300)
-plt.savefig("C:\source\SPF\chart_picture\lg.png", dpi=300)
+#plt.savefig("./chart_picture/sk.png",dpi=300)
+plt.savefig("C:\source\SPF\chart_picture\sk.png", dpi=300)
 #plt.show()
 
 # 사진 데이터 binary형식으로 바꿔주는 함수
@@ -139,8 +139,8 @@ connection = pymysql.connect(host='222.122.86.187', port=3306, user='geniuses777
 try:
     with connection.cursor() as cursor:
         sql = 'INSERT INTO stock_hye (company_name, stock_price, image) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE stock_price = VALUES(stock_price), image = VALUES(image)'
-        image = convertToBinaryData("C:\source\SPF\chart_picture\lg.png")
-        cursor.execute(sql, ('LG', int(predict), image))          # 넣으려는 값
+        image = convertToBinaryData("C:\source\SPF\chart_picture\sk.png")
+        cursor.execute(sql, ('SK', int(predict), image))          # 넣으려는 값
     connection.commit()
     
 finally:

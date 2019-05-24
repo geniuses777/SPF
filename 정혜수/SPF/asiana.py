@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[7]:
+# In[1]:
 
 #
 # LSTM모델을 이용해서 주가예측
@@ -120,7 +120,7 @@ plt.title('[아시아나 항공] 예측 그래프\n예측값 : %d \t\t\t\t\t\t\t
 
 #plt.savefig("./chart_picture/asiana.png",dpi=300)
 plt.savefig("C:\source\SPF\chart_picture\\asiana.png", dpi=300)
-plt.show()      #자동실행하면 오류
+#plt.show()      자동실행하면 오류
 
 # 사진 데이터 binary형식으로 바꿔주는 함수
 def convertToBinaryData(filename):
