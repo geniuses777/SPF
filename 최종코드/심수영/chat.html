@@ -1,0 +1,276 @@
+<?php
+	//채팅
+	$user = $_GET['id'];
+    $company = $_GET['company'];
+
+	session_start ();
+	
+	    $_SESSION ['name'] = stripslashes ( htmlspecialchars ( $_GET ['id'] ) );
+	    $cb = fopen ( "$company.html", 'a' );
+	    //fwrite ( $cb, "<div class='msgln'><i>User " . $_SESSION ['name'] . " has joined the chat session.</i><br></div>" );
+	    fclose ( $cb );
+
+	    //echo "$company.html";
+
+	$con = mysqli_connect("localhost","geniuses777","stock7840","geniuses777");
+
+
+    //종목 값
+    $sql="SELECT * from stockdata where company_name='$company'";     // SELECT 구문을 통해 DB를 불러옵니다.
+
+    $result=mysqli_query($con,$sql);
+
+    $numrow = mysqli_num_rows($result);   //총 몇 개의 행을 불러왔는지 확인합니다.    
+
+     for($i=0; $i<1 ; $i++){                 //행(ROW) 수 만큼 
+
+        $row[$i]=mysqli_fetch_array($result);     // mysql_fetch_array를 반복합니다.
+
+    }    
+    for($i = 0; $i < 1 ; $i++){             // mysql_fetch_array를 실행할 때마다 배열을 생성합니다. 
+        $todayArr[$i] = $row[$i][1];  // $ComCodeArr[0]의 값이 IN_ComName 컬럼의 첫번째 값임을 정의 
+        $updownArr[$i] = $row[$i][2];
+        $percentArr[$i] = $row[$i][3];
+    }
+
+    /*for($i =0; $i<1 ; $i++){
+      echo $todayArr[$i];
+      echo $updownArr[$i];
+      echo $percentArr[$i];
+    }*/
+
+    $num=0;
+
+    mysqli_close($con);  
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SPF(Stock Price Forest)</title>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		*{
+	      margin:0px;
+	      background-color:#ededed;
+	    }
+	    div * {
+	      background-color: white;
+	    }
+	    .header{
+	    	width:50%;
+		    margin:0 auto;
+		    padding:10px 10px 0px 10px;
+		    background-color: white;
+		    border-bottom: 1px solid #9e9e9e7a;
+	    }
+	    .header>.nav{
+	    	height: 50px;
+	    	width: 100%;
+	    	text-align: center;
+	    	font-size: 22px;
+	    }
+	    .header>.nav>#home{
+	    	float: left;
+	    	height: 80%;
+	    	width: 20%;
+	    	text-align: left;
+	    }
+	    .header>.nav>#company_name{
+	    	text-align: center;
+	    	font-size: 22px;
+	    	width: 60%;
+	    	margin:0 auto;
+	    }
+	    .header>.nav>form{
+	    	float: right;
+	    	text-align: right;
+	    	width: 20%;
+	    }
+	    .list{
+	      width: 100%;
+	      height: 50px;
+	    }
+	    .list>.list2{
+	      width:50%;
+	      height:70%;
+	      border-bottom: 3px solid black;
+	      float: left;
+	      text-align: center;
+	      font-size: 20px;
+	      font-weight: bold;
+	      padding-top: 13px;
+	    }
+	    .list>.list2>a:link{color: black; text-decoration: none;}
+	    .list>.list2>a:visited{color: black; text-decoration: none;}
+	    .list>.list2>a:hover{color: black; text-decoration: none;}
+
+	    .list>.list1>a>.item{
+	      width:50%;
+	      float: left;
+	      text-align: center;
+	      font-size: 20px;
+	      padding-top: 13px;
+	    }
+	    .list>.list1>a:link{color: black; text-decoration: none;}
+	    .list>.list1>a:visited{color: black; text-decoration: none;}
+	    .list>.list1>a:hover{color: black; text-decoration: none;}
+	    .header>.value{
+	    	text-align: center;
+	    }
+	    #wrapper{
+	      width: 50%;
+	      padding: 10px;
+	      background-color: white;
+	      margin: 15px auto;
+	      border-top: 1px solid #9e9e9e7a;
+	      border-bottom: 1px solid #9e9e9e7a;
+	    }
+	    #wrapper>form{
+	    	text-align: center;
+	    }
+	    @media screen and (max-width: 992px){
+	    	.header{
+	    		width: 95%;
+	    	}
+	    	#wrapper{
+	    		width: 95%;
+	    	}
+	    }
+	</style>
+</head>
+<body>
+	<div class="header">
+		<div class="nav">
+			<a id="company_name"><?php echo $company?></a>
+			<div id="home"><a href="index.html?id=<?php echo $user?>"><img src="home.PNG" height="80%"></a></div>
+			<form action="interest.php" method="post">
+				<input type="hidden" id="name" name="company" value="<?php echo $company?>">
+				<input type="hidden" id="user" name="user" value="<?php echo $user?>">
+	            <input type="IMAGE" class="img" src="heartplus.PNG" name="heartplus" value="Submit"  align="absmiddle" style="height: 35px;">
+	        </form> 
+		</div>
+		<div class="value">
+			<p style="font-size:40px;"><?php echo $todayArr[0]?></p>
+			<p>
+				<?php 
+				if($updownArr[0]>0) {
+                echo "<a style='color:#e62300'>";
+                echo $updownArr[0];
+                echo "</a>";
+	            }
+	            else{
+	              echo "<a style='color:#0077f0'>";
+	              echo $updownArr[0];
+	              echo "</a>";
+	            }
+	            if($percentArr[0]>0) {
+                echo "&nbsp<a style='color:#e62300'>";
+                echo $percentArr[0];
+                echo "</a>";
+	            }
+	            else{
+	              echo "&nbsp<a style='color:#0077f0'>";
+	              echo $percentArr[0];
+	              echo "</a>";
+	            }
+	            ?>
+			</p>
+		</div>
+		<div class="list">
+	          <div class="list1">
+	            <a href='javascript:void(0);' onclick="go_company();"><div class="item">종합</div></a>
+	          </div>
+	          <div class="list2">
+	            <a href='javascript:void(0);' onclick="go_chat();"><div class="item">채팅</div></a>
+	          </div>
+	      </div>
+	</div>
+
+	<!--채팅-->
+	<div id="wrapper">
+	<div id="menu">
+	<div style="clear: both"></div> 
+	</div>
+	<div id="chatbox">
+	<?php
+		if (file_exists ( "$company.html" ) && filesize ( "$company.html" ) > 0) {
+		$handle = fopen ( "$company.html", 'r' );
+		$contents = fread ( $handle, filesize ( "$company.html" ) );
+		fclose ( $handle );
+
+		echo $contents;
+		}
+	?>
+	</div>
+	<form name="message" action="">
+		<input type="hidden" name="company" id="company" value="<?php echo $company;?>">
+		<input name="usermsg" class="form-control" type="text" id="usermsg" placeholder="글을 입력하세요." style="width: 80%; height: 30px; border:1px solid gray; border-radius: 5px; padding-left: 10px; margin:10px 0px;"/>
+		<input name="submitmsg" class="btn btn-default" type="submit" id="submitmsg" value="작성" style="background-color: #17a2b8; border: 1px solid #17a2b8; border-radius: 5px; height: 35px; width: 10%; margin-left: 10px; color: white;"/>
+	</form>
+	</div>
+</body>
+</html>
+<Script>
+	var name = get_name();
+	var id = get_id();
+	console.log(name);
+	console.log(id);
+
+	//document.getElementById("name").value=name;
+	//document.getElementById("user").value=id;
+	$(document).ready(function(){
+	});
+	$("#submitmsg").click(function(){
+		if(id != "") {
+	        var clientmsg = $("#usermsg").val();
+	        var company = $("#company").val();
+	        $.post("post.php", {text: clientmsg, company});             
+	        $("#usermsg").attr("value", "");
+	        loadLog;
+	    	 }
+	    else{
+	    	alert('로그인해야합니다.'); location.replace('chat.html?company='+name+'&id='+id);
+	    }
+	    return false;
+	});
+	function loadLog(){    
+	    var oldscrollHeight = $("#chatbox").attr("scrollHeight") - 20;
+	    $.ajax({
+	        url: "<?php echo $company; ?>.html",
+	        cache: false,
+	        success: function(html){       
+	            $("#chatbox").html(html);       
+	            var newscrollHeight = $("#chatbox").attr("scrollHeight") - 20;
+	            if(newscrollHeight > oldscrollHeight){
+	                $("#chatbox").animate({ scrollTop: newscrollHeight }, 'normal');
+	            }              
+	        },
+	    });
+	}
+	setInterval (loadLog, 2500);
+
+
+	function get_name()  //기업이름, 한글깨짐
+    {
+    	temp=location.href.split("?company=");
+        data=temp[1].split("&");
+   	    name=data[0];
+    	return name;
+  }
+  function get_id()  //이용자id, 한글깨짐
+    {
+    	temp=location.href.split("?");
+        data=temp[1].split("&id=");
+    	id=data[1];
+    	return id;
+  }
+  function go_chat()
+  {
+    location.href="chat.html?company="+name+"&id="+id;
+  }
+  function go_company()
+  {
+    location.href="company.html?company="+name+"&id="+id;
+  }
+</Script>
